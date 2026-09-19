@@ -17,9 +17,15 @@
     color:#fff;text-align:center;padding:26px 16px 18px;
     box-shadow:0 2px 14px rgba(0,0,0,.5);position:relative;z-index:10;}
   .marca-logo{display:block;margin:0 auto;line-height:0;}
-  .marca-logo svg{display:block;margin:0 auto;width:clamp(240px,42vw,520px);height:auto;
-    filter:drop-shadow(0 3px 8px rgba(0,0,0,.45));}
-  .marca-logo svg path{fill:#fff;}
+  /* Logo STELLANTIS com a mesma luz prateada do "Pensando" passando por cima */
+  .marca-luz{display:block;margin:0 auto;
+    width:clamp(240px,42vw,520px);aspect-ratio:1180.5 / 250;
+    background:linear-gradient(90deg,#5a6172 0%,#5a6172 40%,#eef1f7 50%,#5a6172 60%,#5a6172 100%);
+    background-size:300% 100%;
+    -webkit-mask:url("stellantis.svg") no-repeat center/contain;
+    mask:url("stellantis.svg") no-repeat center/contain;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.45));
+    animation:brilho 3.5s ease-in-out infinite;}
   .patrimonial{font-family:Georgia,"Times New Roman","Cambria",serif;
     font-size:clamp(13px,2.6vw,18px);font-weight:700;letter-spacing:6px;
     text-transform:uppercase;opacity:.92;position:absolute;
@@ -72,7 +78,7 @@
 <body>
   <div class="topo">
     <div class="marca-logo">
-      <img src="stellantis.svg" alt="Stellantis" style="width:clamp(240px,42vw,520px);height:auto;filter:drop-shadow(0 3px 8px rgba(0,0,0,.45));" />
+      <div class="marca-luz" role="img" aria-label="Stellantis"></div>
     </div>
     <div class="patrimonial">Patrimonial</div>
     <div class="subtexto">Assistente disponível 24 horas por dia, 7 dias por semana</div>
