@@ -23,8 +23,6 @@
   .patrimonial{font-size:clamp(12px,2.4vw,16px);font-weight:600;letter-spacing:6px;
     text-transform:uppercase;opacity:.9;margin-top:12px;}
   .subtexto{font-size:clamp(11px,1.8vw,13px);opacity:.7;margin-top:6px;}
-  .aviso{max-width:900px;width:100%;margin:10px auto 0;padding:8px 16px;
-    font-size:12px;color:#8b93a3;text-align:center;}
   #chat{position:relative;flex:1 1 auto;min-height:0;max-width:900px;width:100%;
     margin:10px auto;background:#06070a;overflow:hidden;border-radius:22px;
     border:1px solid #161b25;box-shadow:0 10px 40px rgba(0,0,0,.6);
@@ -37,13 +35,17 @@
     border-bottom-left-radius:6px;}
   .user{align-self:flex-end;background:var(--user-bg);color:#fff;
     border-bottom-right-radius:6px;}
-  /* indicador de digitando: tres pontos PARADOS */
-  .typing{align-self:flex-start;position:relative;min-width:64px;min-height:40px;
-    background:var(--bot-bg);border-radius:18px;border-bottom-left-radius:6px;}
-  .typing::before{content:"";position:absolute;left:26px;top:50%;
-    transform:translateY(-50%);width:8px;height:8px;border-radius:50%;
-    background:transparent;
-    box-shadow:-14px 0 0 #cbd2e0,0 0 0 #cbd2e0,14px 0 0 #cbd2e0;}
+  /* indicador "Pensando..." com luz prateada passando (sem caixa, sem pontos) */
+  .typing{align-self:flex-start;position:relative;padding:6px 4px;
+    background:transparent;border:none;}
+  .typing::before{content:"Pensando...";white-space:nowrap;
+    font-size:12px;font-weight:500;letter-spacing:0.3px;
+    background:linear-gradient(90deg,#5a6172 0%,#eef1f7 12%,#5a6172 25%,#5a6172 50%,#eef1f7 62%,#5a6172 75%,#5a6172 100%);
+    background-size:200% 100%;
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+    animation:brilho 1.5s linear infinite;}
+  @keyframes brilho{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
   /* luz azul da base — intensidade intermediaria */
   #chat::after{content:"";position:absolute;bottom:0;left:0;z-index:5;width:100%;
     height:110px;pointer-events:none;
@@ -71,7 +73,6 @@
     <div class="patrimonial">Patrimonial</div>
     <div class="subtexto">Assistente disponível 24 horas por dia, 7 dias por semana</div>
   </div>
-  <div class="aviso">Prévia visual — sem senha e sem conexão. Só para avaliar aparência.</div>
   <div id="chat">
     <div class="lista">
       <div class="msg bot">Olá! Sou o assistente 1r ai. Como posso ajudar?</div>
