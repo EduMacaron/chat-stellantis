@@ -88,14 +88,18 @@
       100% { transform:scaleY(1);    }
     }
 
-    /* Indicador "Pensando..." com luz prateada passando (sem caixa, sem pontos) */
-    .chat-messages-list [class*="typing"] { position:relative;
-      min-width:0 !important; min-height:0 !important;
+    /* Indicador "Pensando..." com luz prateada (texto unico, sem caixa, sem pontos) */
+    .chat-messages-list [class*="typing"] {
       background:transparent !important; box-shadow:none !important;
-      border:none !important; padding:6px 4px !important; }
-    .chat-messages-list [class*="typing"] > * { visibility:hidden; }
-    .chat-messages-list [class*="typing"]::before { content:"Pensando..."; visibility:visible;
-      position:absolute; left:6px; top:50%; transform:translateY(-50%);
+      border:none !important; }
+    /* esconde os pontos originais do indicador */
+    .chat-messages-list [class*="typing"] > * { display:none !important; }
+    /* mostra "Pensando..." UMA unica vez, so no balao externo do indicador */
+    .chat-messages-list [class*="message-typing"]:not([class*="body"]):not([class*="circle"]) {
+      position:relative; min-width:0 !important; min-height:0 !important;
+      padding:6px 4px !important; }
+    .chat-messages-list [class*="message-typing"]:not([class*="body"]):not([class*="circle"])::before {
+      content:"Pensando..."; display:inline-block;
       white-space:nowrap; font-size:12px; font-weight:500; letter-spacing:0.3px;
       background:linear-gradient(90deg,#5a6172 0%,#eef1f7 50%,#5a6172 100%);
       background-size:200% 100%;
