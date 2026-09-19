@@ -25,6 +25,11 @@
     text-transform:uppercase;opacity:.92;position:absolute;
     right:clamp(14px,4vw,34px);bottom:16px;}
   .subtexto{font-size:clamp(11px,1.8vw,13px);opacity:.7;margin-top:22px;}
+  /* Em telas pequenas (celular): PATRIMONIAL volta para baixo do logo, centralizado */
+  @media (max-width:640px){
+    .patrimonial{position:static;right:auto;bottom:auto;margin-top:12px;}
+    .subtexto{margin-top:6px;}
+  }
   #chat{position:relative;flex:1 1 auto;min-height:0;max-width:900px;width:100%;
     margin:10px auto;background:#06070a;overflow:hidden;border-radius:22px;
     border:1px solid #161b25;box-shadow:0 10px 40px rgba(0,0,0,.6);
