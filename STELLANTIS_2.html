@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assistente 1r ai</title>
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <style>
+    :root {
+      --chat--color-white: #0b0d12; --chat--color-light: #10141c;
+      --chat--color-light-shade-50: #161b25; --chat--color-light-shade-100: #1d2330;
+      --chat--color-medium: #2a3040; --chat--color-dark: #eef1f7;
+      --chat--color-disabled: #6c727d; --chat--color-typing: #cbd2e0;
+      --chat--body--background: #06070a;
+      --chat--message--bot--background: #12151d; --chat--message--bot--color: #eef1f7;
+      --chat--message--user--background: #1330d9; --chat--message--user--color: #ffffff;
+      --chat--message--pre--background: #0d1017;
+      --chat--input--background: rgba(16,20,28,0.35); --chat--input--text-color: #eef1f7;
+      --chat--input--border: 1px solid rgba(255,255,255,0.12);
+      --chat--border-radius: 16px;
+      --chat--message--border-radius: 18px;
+      --azul: #00102e; --azul-2: #001f52;
+      --chat--header--background: #06070a; --chat--header--color: #eef1f7;
+      --chat--heading--font-size: 0;
+    }
+    /* Esconde a faixa/cabecalho interno do componente de chat */
+    #chat-container [class*="chat-header"],
+    #chat-container .chat-heading { display:none !important; }
+    /* Balões de mensagem com cantos arredondados */
+    .chat-messages-list [class*="message"] {
+      border-radius:18px !important;
+    }
+    /* Barra de digitação em vidro fosco */
+    #chat-container [class*="chat-input"] {
+      background:rgba(16,20,28,0.35) !important;
+      -webkit-backdrop-filter:blur(14px) saturate(140%);
+      backdrop-filter:blur(14px) saturate(140%);
+      border-top:1px solid rgba(255,255,255,0.10) !important;
+    }
+    html, body { margin:0; padding:0; height:100%;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:#000; color:#eef1f7; }
+    body { display:flex; flex-direction:column; }
+
+    .topo { flex:0 0 auto; background:linear-gradient(135deg,var(--azul),var(--azul-2));
+      color:#fff; text-align:center; padding:34px 16px 22px;
+      box-shadow:0 2px 14px rgba(0,0,0,0.5); position:relative; z-index:10; }
+    .marca-logo { display:block; margin:0 auto; line-height:0; }
+    /* Logo STELLANTIS com a mesma luz prateada do "Pensando" passando por cima */
+    .marca-luz { display:block; margin:0 auto;
+      width:clamp(240px, 42vw, 520px); aspect-ratio:1180.5 / 250;
+      background:linear-gradient(90deg,#5a6172 0%,#5a6172 40%,#eef1f7 50%,#5a6172 60%,#5a6172 100%);
+      background-size:300% 100%;
+      -webkit-mask:url("stellantis.svg") no-repeat center/contain;
+      mask:url("stellantis.svg") no-repeat center/contain;
+      filter:drop-shadow(0 3px 8px rgba(0,0,0,0.45));
+      animation:brilhoLogo 3.5s ease-in-out infinite; }
+    @keyframes brilhoLogo {
+      0%   { background-position:150% 0;  }
+      100% { background-position:-150% 0; }
+    }
+    .patrimonial { font-family:Georgia,"Times New Roman","Cambria",serif;
+      font-size:clamp(13px,2.6vw,18px); font-weight:700; letter-spacing:6px;
+      text-transform:uppercase; opacity:0.92; position:absolute;
+      right:clamp(14px,4vw,34px); bottom:16px; }
+    .subtexto { font-size:clamp(12px,1.8vw,14px); font-weight:400; opacity:0.7; margin-top:22px; }
+    /* Em telas pequenas (celular): PATRIMONIAL volta para baixo do logo, centralizado */
+    @media (max-width:640px){
+      .patrimonial { position:static; right:auto; bottom:auto; margin-top:12px; }
+      .subtexto { margin-top:6px; }
+    }
+
+    #chat-container { position:relative; flex:1 1 auto; min-height:0;
+      max-width:900px; width:100%; margin:12px auto; background:#06070a;
+      overflow:hidden; border-radius:22px; border:1px solid #161b25;
+      box-shadow:0 10px 40px rgba(0,0,0,0.6); }
+    .chat-heading { display:none !important; }
+
+    #chat-container * { scrollbar-width:thin; scrollbar-color:#2a3040 #06070a; }
+    #chat-container *::-webkit-scrollbar { width:10px; }
+    #chat-container *::-webkit-scrollbar-track { background:#06070a; }
+    #chat-container *::-webkit-scrollbar-thumb { background:#2a3040;
+      border-radius:6px; border:2px solid #06070a; }
+    #chat-container *::-webkit-scrollbar-thumb:hover { background:#3a4152; }
+
+    #chat-container::after {
+      content:""; position:absolute; bottom:0; left:0; z-index:5;
+      width:100%; height:110px; pointer-events:none;
+      background:radial-gradient(ellipse 120% 100% at 50% 100%,
+        rgba(19,48,217,0.62) 0%,
+        rgba(16,40,190,0.38) 45%,
+        rgba(11,26,130,0.16) 72%,
+        rgba(0,0,0,0) 100%);
+      filter:blur(2px);
+      box-shadow:0 0 22px rgba(19,48,217,0.28);
+      transform-origin:bottom center;
+      transform:scaleY(1);
+      transition:transform 0.25s ease;
+    }
+    #chat-container.vibrar::after { animation:vibra 0.4s ease; }
+    @keyframes vibra {
+      0%   { transform:scaleY(1);    }
+      50%  { transform:scaleY(1.06); }
+      100% { transform:scaleY(1);    }
+    }
+
+    /* Indicador "Pensando..." com luz prateada (texto unico, sem caixa, sem pontos) */
+    .chat-messages-list [class*="typing"] {
+      background:transparent !important; box-shadow:none !important;
+      border:none !important; }
+    /* esconde os pontos originais do indicador */
+    .chat-messages-list [class*="typing"] > * { display:none !important; }
+    /* mostra "Pensando..." UMA unica vez, so no balao externo do indicador */
+    .chat-messages-list [class*="message-typing"]:not([class*="body"]):not([class*="circle"]) {
+      position:relative; min-width:0 !important; min-height:0 !important;
+      padding:6px 4px !important; }
+    .chat-messages-list [class*="message-typing"]:not([class*="body"]):not([class*="circle"])::before {
+      content:"Pensando..."; display:inline-block;
+      white-space:nowrap; font-size:12px; font-weight:500; letter-spacing:0.3px;
+      background:linear-gradient(90deg,#5a6172 0%,#eef1f7 50%,#5a6172 100%);
+      background-size:200% 100%;
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent; color:transparent;
+      animation:brilho 1.6s linear infinite; }
+    @keyframes brilho {
+      0%   { background-position:200% 0;  }
+      100% { background-position:-200% 0; }
+    }
+
+    /* Tela de senha (acesso restrito) */
+    #login-overlay { position:fixed; inset:0; z-index:1000; display:flex;
+      flex-direction:column; align-items:center; justify-content:center; gap:22px;
+      padding:24px; text-align:center;
+      background:radial-gradient(ellipse 120% 80% at 50% 30%, #001f52 0%, #00102e 45%, #000 100%); }
+    #login-overlay.hidden { display:none; }
+    #login-overlay .lg-marca { color:#fff; font-weight:700;
+      font-size:clamp(26px,6vw,52px); letter-spacing:10px; }
+    #login-overlay .lg-titulo { color:#fff; font-size:clamp(12px,2vw,15px);
+      letter-spacing:4px; text-transform:uppercase; opacity:0.8; }
+    #login-form { display:flex; flex-direction:column; gap:12px; width:min(320px,86vw); }
+    #login-form input { padding:14px 16px; border-radius:12px; border:1px solid #2a3040;
+      background:#0b0d12; color:#eef1f7; font-size:15px; outline:none; text-align:center; }
+    #login-form input:focus { border-color:#1330d9; box-shadow:0 0 0 3px rgba(19,48,217,0.3); }
+    #login-form button { padding:14px 16px; border-radius:12px; border:none; cursor:pointer;
+      background:linear-gradient(135deg,#1330d9,#0a1f9e); color:#fff; font-size:15px;
+      font-weight:600; letter-spacing:1px; transition:filter .15s ease; }
+    #login-form button:hover { filter:brightness(1.1); }
+    #login-form button:disabled { opacity:0.6; cursor:default; }
+    #login-erro { color:#ff8a8a; font-size:13px; min-height:18px; }
+  </style>
+</head>
+<body>
+  <div id="login-overlay">
+    <div class="lg-marca">STELLANTIS</div>
+    <div class="lg-titulo">Acesso restrito</div>
+    <form id="login-form">
+      <input type="password" id="senha" placeholder="Digite a senha" autocomplete="current-password" />
+      <button type="submit" id="entrar">Entrar</button>
+      <div id="login-erro"></div>
+    </form>
+  </div>
+  <div class="topo">
+    <div class="marca-logo">
+      <div class="marca-luz" role="img" aria-label="Stellantis"></div>
+    </div>
+    <div class="patrimonial">Patrimonial</div>
+    <div class="subtexto" id="subtexto"></div>
+  </div>
+  <div id="chat-container"></div>
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    const WEBHOOK = 'https://emacaron.app.n8n.cloud/webhook/add5ef72-1f64-4570-8834-34743a122b82/chat';
+    const USUARIO = 'STELLANTIS';
+
+    document.getElementById('subtexto').textContent =
+      'Assistente dispon\u00edvel 24 horas por dia, 7 dias por semana';
+
+    let chatIniciado = false;
+    function iniciarChat(authHeader) {
+      if (chatIniciado) return;
+      chatIniciado = true;
+      createChat({
+        webhookUrl: WEBHOOK,
+        webhookConfig: { method: 'POST', headers: { Authorization: authHeader } },
+        target: '#chat-container', mode: 'fullscreen', showWelcomeScreen: false,
+        allowFileUploads: true, allowedFilesMimeTypes: '*',
+        initialMessages: ['Ol\u00e1! Sou o assistente 1r ai. Como posso ajudar?'],
+        i18n: { en: { title:'', subtitle:'', inputPlaceholder:'Digite sua mensagem...',
+          getStarted:'Nova conversa', footer:'' } }
+      });
+    }
+
+    const overlay = document.getElementById('login-overlay');
+    const form = document.getElementById('login-form');
+    const inputSenha = document.getElementById('senha');
+    const btn = document.getElementById('entrar');
+    const erro = document.getElementById('login-erro');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const senha = inputSenha.value;
+      if (!senha) { erro.textContent = 'Digite a senha.'; return; }
+      const authHeader = 'Basic ' + btoa(USUARIO + ':' + senha);
+      btn.disabled = true; erro.textContent = 'Verificando...';
+      try {
+        const resp = await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { Authorization: authHeader, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'loadPreviousSession', sessionId: 'verificacao-de-acesso' })
+        });
+        if (resp.status === 401 || resp.status === 403) {
+          erro.textContent = 'Senha incorreta.'; btn.disabled = false; return;
+        }
+        erro.textContent = '';
+        overlay.classList.add('hidden');
+        iniciarChat(authHeader);
+      } catch (err) {
+        erro.textContent = 'Erro de conex\u00e3o. Tente novamente.'; btn.disabled = false;
+      }
+    });
+
+    const chatEl = document.getElementById('chat-container');
+    document.addEventListener('input', (e) => {
+      const alvo = e.target;
+      if (alvo && alvo.closest && alvo.closest('#chat-container') &&
+          (alvo.tagName === 'TEXTAREA' || alvo.tagName === 'INPUT')) {
+        chatEl.classList.remove('vibrar');
+        void chatEl.offsetWidth;
+        chatEl.classList.add('vibrar');
+      }
+    });
+  </script>
+</body>
+</html>
