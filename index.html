@@ -46,10 +46,19 @@
       color:#fff; text-align:center; padding:34px 16px 22px;
       box-shadow:0 2px 14px rgba(0,0,0,0.5); position:relative; z-index:10; }
     .marca-logo { display:block; margin:0 auto; line-height:0; }
-    /* Logo STELLANTIS branco estatico (sem brilho) */
-    .marca-branca { display:block; margin:0 auto;
-      width:clamp(240px, 42vw, 520px);
-      filter:drop-shadow(0 3px 8px rgba(0,0,0,0.45)); }
+    /* Logo STELLANTIS com a mesma luz prateada do "Pensando" passando por cima */
+    .marca-luz { display:block; margin:0 auto;
+      width:clamp(240px, 42vw, 520px); aspect-ratio:1180.5 / 250;
+      background:linear-gradient(90deg,#5a6172 0%,#5a6172 40%,#eef1f7 50%,#5a6172 60%,#5a6172 100%);
+      background-size:300% 100%;
+      -webkit-mask:url("stellantis.svg") no-repeat center/contain;
+      mask:url("stellantis.svg") no-repeat center/contain;
+      filter:drop-shadow(0 3px 8px rgba(0,0,0,0.45));
+      animation:brilhoLogo 3.5s ease-in-out infinite; }
+    @keyframes brilhoLogo {
+      0%   { background-position:150% 0;  }
+      100% { background-position:-150% 0; }
+    }
     .patrimonial { font-family:Georgia,"Times New Roman","Cambria",serif;
       font-size:clamp(13px,2.6vw,18px); font-weight:700; letter-spacing:6px;
       text-transform:uppercase; opacity:0.92; position:absolute;
@@ -152,7 +161,7 @@
   </div>
   <div class="topo">
     <div class="marca-logo">
-      <img class="marca-branca" src="stellantis.svg" alt="Stellantis" />
+      <div class="marca-luz" role="img" aria-label="Stellantis"></div>
     </div>
     <div class="patrimonial">Patrimonial</div>
     <div class="subtexto" id="subtexto"></div>
@@ -205,7 +214,7 @@
         }
         erro.textContent = '';
         overlay.classList.add('hidden');
-        iniciarChat(authHeader); 
+        iniciarChat(authHeader);
       } catch (err) {
         erro.textContent = 'Erro de conex\u00e3o. Tente novamente.'; btn.disabled = false;
       }
