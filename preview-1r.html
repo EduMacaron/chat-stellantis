@@ -47,9 +47,9 @@
       color:#fff; text-align:center; padding:34px 16px 22px;
       box-shadow:0 2px 14px rgba(0,0,0,0.5); position:relative; z-index:10; }
     .marca-logo { display:block; margin:0 auto; line-height:0; }
-    /* Logo 1R AI (imagem real, dourado em circulo branco): exibido como esta, maior sobre o azul */
+    /* Logo 1R AI (imagem real, dourado em circulo branco): faixa azul reduzida como no stellantis antigo */
     .marca-1r { display:block; margin:0 auto;
-      height:clamp(104px, 17vw, 210px); width:auto; }
+      height:clamp(64px, 11vw, 120px); width:auto; }
     .patrimonial { font-family:Georgia,"Times New Roman","Cambria",serif;
       font-size:clamp(13px,2.6vw,18px); font-weight:700; letter-spacing:6px;
       text-transform:uppercase; opacity:0.92; position:absolute;
@@ -134,10 +134,10 @@
         radial-gradient(120% 80% at 50% 12%, rgba(0,16,46,.35), rgba(0,0,0,.85) 70%),
         linear-gradient(180deg, #05070d 0%, #070b16 55%, #05070d 100%);
       z-index:1; }
-    /* Brilho azul suave na base */
+    /* Brilho azul suave na base (reduzido como no stellantis antigo) */
     #login-overlay .brilho-base { position:absolute; left:50%; bottom:-140px;
       transform:translateX(-50%); width:80vw; max-width:900px; height:300px;
-      background:radial-gradient(50% 50% at 50% 50%, rgba(30,91,255,.35), rgba(30,91,255,0) 70%);
+      background:radial-gradient(50% 50% at 50% 50%, rgba(30,91,255,.18), rgba(30,91,255,0) 70%);
       filter:blur(20px); z-index:1; pointer-events:none; }
     #login-overlay .cartao { position:relative; z-index:2;
       width:min(92vw,460px); text-align:center;
@@ -145,10 +145,23 @@
       background:rgba(18,21,29,.55); border:1px solid rgba(255,255,255,.08);
       backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
       box-shadow:0 20px 60px rgba(0,0,0,.55); }
-    /* Logo 1R AI (dourado em circulo branco) na tela de bloqueio */
-    #login-overlay .marca-lock { display:block; margin:0 auto 6px;
-      width:clamp(190px,56vw,280px); height:auto;
+    /* Logo 1R AI na tela de bloqueio: mesma proporcao atual + luz prateada passando (como stellantis antigo) */
+    #login-overlay .marca-lock-wrap { position:relative; display:block; margin:0 auto 6px;
+      width:clamp(190px,56vw,280px); border-radius:50%; overflow:hidden;
       filter:drop-shadow(0 3px 8px rgba(0,0,0,.5)); }
+    #login-overlay .marca-lock { display:block; width:100%; height:auto; }
+    #login-overlay .marca-lock-wrap::after { content:""; position:absolute; inset:0;
+      background:linear-gradient(115deg,
+        rgba(255,255,255,0) 42%,
+        rgba(255,255,255,.85) 50%,
+        rgba(255,255,255,0) 58%);
+      background-size:250% 100%; background-repeat:no-repeat;
+      mix-blend-mode:screen; pointer-events:none;
+      animation:luz-prata 3.5s ease-in-out infinite; }
+    @keyframes luz-prata {
+      0%   { background-position:150% 0; }
+      100% { background-position:-50% 0; }
+    }
     /* Campo de senha */
     #login-overlay .form-senha { margin-top:26px; display:flex; flex-direction:column; gap:12px; }
     #login-overlay .campo { display:flex; align-items:center; gap:10px;
@@ -180,7 +193,9 @@
     <div class="brilho-base"></div>
 
     <main class="cartao">
-      <img class="marca-lock" src="5a468704-e049-41cc-9669-0e6b36f3f60d.png" alt="1R AI" />
+      <span class="marca-lock-wrap">
+        <img class="marca-lock" src="5a468704-e049-41cc-9669-0e6b36f3f60d.png" alt="1R AI" />
+      </span>
 
       <form id="login-form" class="form-senha">
         <div class="campo">
