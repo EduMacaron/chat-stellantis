@@ -47,10 +47,9 @@
       color:#fff; text-align:center; padding:34px 16px 22px;
       box-shadow:0 2px 14px rgba(0,0,0,0.5); position:relative; z-index:10; }
     .marca-logo { display:block; margin:0 auto; line-height:0; }
-    /* Logo STELLANTIS branco estatico (sem brilho) */
-    .marca-branca { display:block; margin:0 auto;
-      width:clamp(240px, 42vw, 520px);
-      filter:drop-shadow(0 3px 8px rgba(0,0,0,0.45)); }
+    /* Logo 1R AI (imagem real, dourado em circulo branco): exibido como esta, maior sobre o azul */
+    .marca-1r { display:block; margin:0 auto;
+      height:clamp(104px, 17vw, 210px); width:auto; }
     .patrimonial { font-family:Georgia,"Times New Roman","Cambria",serif;
       font-size:clamp(13px,2.6vw,18px); font-weight:700; letter-spacing:6px;
       text-transform:uppercase; opacity:0.92; position:absolute;
@@ -146,19 +145,10 @@
       background:rgba(18,21,29,.55); border:1px solid rgba(255,255,255,.08);
       backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
       box-shadow:0 20px 60px rgba(0,0,0,.55); }
-    /* Logo STELLANTIS com luz prateada passando por cima */
-    #login-overlay .marca-luz { display:block; margin:0 auto 6px;
-      width:clamp(220px,64vw,360px); aspect-ratio:1180.5 / 250;
-      background:linear-gradient(90deg,#5a6172 0%,#5a6172 40%,#eef1f7 50%,#5a6172 60%,#5a6172 100%);
-      background-size:300% 100%;
-      -webkit-mask:url("stellantis.svg") no-repeat center/contain;
-      mask:url("stellantis.svg") no-repeat center/contain;
-      filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));
-      animation:brilho-logo 3.5s ease-in-out infinite; }
-    @keyframes brilho-logo {
-      0%{background-position:120% 0;}
-      100%{background-position:-20% 0;}
-    }
+    /* Logo 1R AI (dourado em circulo branco) na tela de bloqueio */
+    #login-overlay .marca-lock { display:block; margin:0 auto 6px;
+      width:clamp(190px,56vw,280px); height:auto;
+      filter:drop-shadow(0 3px 8px rgba(0,0,0,.5)); }
     /* Campo de senha */
     #login-overlay .form-senha { margin-top:26px; display:flex; flex-direction:column; gap:12px; }
     #login-overlay .campo { display:flex; align-items:center; gap:10px;
@@ -190,7 +180,7 @@
     <div class="brilho-base"></div>
 
     <main class="cartao">
-      <span class="marca-luz" role="img" aria-label="STELLANTIS"></span>
+      <img class="marca-lock" src="5a468704-e049-41cc-9669-0e6b36f3f60d.png" alt="1R AI" />
 
       <form id="login-form" class="form-senha">
         <div class="campo">
@@ -206,7 +196,7 @@
 
   <div class="topo">
     <div class="marca-logo">
-      <img class="marca-branca" src="stellantis.svg" alt="Stellantis" />
+      <img class="marca-1r" src="5a468704-e049-41cc-9669-0e6b36f3f60d.png" alt="1R AI" />
     </div>
     <div class="patrimonial">Patrimonial</div>
     <div class="subtexto" id="subtexto"></div>
