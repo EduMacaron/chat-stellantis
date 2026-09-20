@@ -47,10 +47,9 @@
       color:#fff; text-align:center; padding:34px 16px 22px;
       box-shadow:0 2px 14px rgba(0,0,0,0.5); position:relative; z-index:10; }
     .marca-logo { display:block; margin:0 auto; line-height:0; }
-    /* Logo 1R AI (imagem real, dourado): fundo preto removido via mix-blend screen, sem invert */
+    /* Logo 1R AI (imagem real, dourado em circulo branco): exibido como esta, maior sobre o azul */
     .marca-1r { display:block; margin:0 auto;
-      height:clamp(72px, 12vw, 156px); width:auto;
-      mix-blend-mode:screen; }
+      height:clamp(104px, 17vw, 210px); width:auto; }
     .patrimonial { font-family:Georgia,"Times New Roman","Cambria",serif;
       font-size:clamp(13px,2.6vw,18px); font-weight:700; letter-spacing:6px;
       text-transform:uppercase; opacity:0.92; position:absolute;
@@ -146,10 +145,9 @@
       background:rgba(18,21,29,.55); border:1px solid rgba(255,255,255,.08);
       backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
       box-shadow:0 20px 60px rgba(0,0,0,.55); }
-    /* TESTE: logo 1R AI dourado na tela de bloqueio (fundo preto removido via mix-blend screen) */
+    /* Logo 1R AI (dourado em circulo branco) na tela de bloqueio */
     #login-overlay .marca-lock { display:block; margin:0 auto 6px;
-      width:clamp(170px,52vw,250px); height:auto;
-      mix-blend-mode:screen;
+      width:clamp(190px,56vw,280px); height:auto;
       filter:drop-shadow(0 3px 8px rgba(0,0,0,.5)); }
     /* Campo de senha */
     #login-overlay .form-senha { margin-top:26px; display:flex; flex-direction:column; gap:12px; }
@@ -182,7 +180,7 @@
     <div class="brilho-base"></div>
 
     <main class="cartao">
-      <img class="marca-lock" src="logo_1R_ai_dourado.png" alt="1R AI" />
+      <img class="marca-lock" src="5a468704-e049-41cc-9669-0e6b36f3f60d.png" alt="1R AI" />
 
       <form id="login-form" class="form-senha">
         <div class="campo">
@@ -198,7 +196,7 @@
 
   <div class="topo">
     <div class="marca-logo">
-      <img class="marca-1r" src="logo_1R_ai_dourado.png" alt="1R AI" />
+      <img class="marca-1r" src="5a468704-e049-41cc-9669-0e6b36f3f60d.png" alt="1R AI" />
     </div>
     <div class="patrimonial">Patrimonial</div>
     <div class="subtexto" id="subtexto"></div>
