@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tela de bloqueio — 1r ai</title>
+  <style>
+    html,body{margin:0;padding:0;height:100%;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:#000;color:#eef1f7;}
+    #login-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:flex-end;
+      justify-content:center;padding:24px 24px 9vh;text-align:center;overflow:hidden;background:#000;}
+    #login-overlay .bg{position:absolute;inset:0;
+      background-image:url("dreamina-2026-09-22-5470-Keep%20all%20the%20original%20scene_%20beautiful%20f....jpeg");
+      background-size:cover;background-position:center;
+      image-rendering:-webkit-optimize-contrast;
+      filter:contrast(1.08) saturate(1.14) brightness(1.03);z-index:0;}
+    #login-overlay .veu{position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(5,7,13,0) 60%, rgba(5,7,13,.22) 100%);z-index:1;}
+    #login-overlay .cartao{position:relative;z-index:2;width:min(92vw,380px);text-align:center;
+      padding:0;background:transparent;border:none;box-shadow:none;
+      backdrop-filter:none;-webkit-backdrop-filter:none;}
+    #login-overlay .form-senha{display:flex;flex-direction:column;gap:12px;}
+    #login-overlay .campo{display:flex;align-items:center;gap:10px;padding:15px 18px;border-radius:16px;
+      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);
+      backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 8px 30px rgba(0,0,0,.28);}
+    #login-overlay .campo input{flex:1;border:none;outline:none;background:transparent;color:#fff;
+      font-size:15px;letter-spacing:2px;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.4);}
+    #login-overlay .campo input::placeholder{color:rgba(255,255,255,.7);letter-spacing:.5px;}
+    #login-overlay .btn-entrar{padding:15px 18px;border-radius:16px;
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);
+      backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+      color:#fff;font-size:15px;font-weight:600;letter-spacing:1px;cursor:pointer;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 8px 30px rgba(0,0,0,.30);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;}
+    #login-overlay .btn-entrar:hover{transform:translateY(-1px);background:rgba(255,255,255,.2);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.32), 0 10px 34px rgba(0,0,0,.4);}
+  </style>
+</head>
+<body>
+  <div id="login-overlay">
+    <div class="bg"></div>
+    <div class="veu"></div>
+    <main class="cartao">
+      <form class="form-senha" onsubmit="return false;">
+        <div class="campo">
+          <input type="password" placeholder="Digite a senha de acesso" />
+        </div>
+        <button type="submit" class="btn-entrar">Entrar</button>
+      </form>
+    </main>
+  </div>
+</body>
+</html>
