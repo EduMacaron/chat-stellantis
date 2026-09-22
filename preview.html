@@ -1,175 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>1r ai — Tela de bloqueio (prévia)</title>
-<style>
-  :root{
-    /* Cole aqui a URL de uma imagem sua/livre para usar como fundo. */
-    /* Ex.: --bg-image: url("https://.../sua-imagem.jpg"); */
-    --bg-image: none;
-    --azul:#00102e;
-    --azul-2:#001f52;
-    --glow:#1e5bff;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;height:100%;}
-  body{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    color:#eef1f7;
-    background:#000;
-    position:relative;
-    overflow:hidden;
-  }
-  /* Camada de imagem de fundo (opcional) */
-  .bg{
-    position:absolute;inset:0;
-    background-image:var(--bg-image);
-    background-size:cover;
-    background-position:center;
-    filter:saturate(1.05);
-    z-index:0;
-  }
-  /* Gradiente escuro por cima, garante contraste com ou sem foto */
-  .veu{
-    position:absolute;inset:0;
-    background:
-      radial-gradient(120% 80% at 50% 12%, rgba(0,16,46,.35), rgba(0,0,0,.85) 70%),
-      linear-gradient(180deg, #05070d 0%, #070b16 55%, #05070d 100%);
-    z-index:1;
-  }
-  /* Brilho azul suave na base */
-  .brilho-base{
-    position:absolute;left:50%;bottom:-140px;transform:translateX(-50%);
-    width:80vw;max-width:900px;height:300px;
-    background:radial-gradient(50% 50% at 50% 50%, rgba(30,91,255,.35), rgba(30,91,255,0) 70%);
-    filter:blur(20px);
-    z-index:1;
-    pointer-events:none;
-  }
-  .cartao{
-    position:relative;z-index:2;
-    width:min(92vw,460px);
-    text-align:center;
-    padding:40px 28px 34px;
-    border-radius:26px;
-    background:rgba(18,21,29,.55);
-    border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    box-shadow:0 20px 60px rgba(0,0,0,.55);
-  }
-  /* Logo STELLANTIS com luz prateada passando por cima */
-  .marca-luz{
-    display:block;margin:0 auto 6px;
-    width:clamp(220px,64vw,360px);
-    aspect-ratio:1180.5 / 250;
-    background:linear-gradient(90deg,#5a6172 0%,#5a6172 40%,#eef1f7 50%,#5a6172 60%,#5a6172 100%);
-    background-size:300% 100%;
-    -webkit-mask:url("stellantis.svg") no-repeat center/contain;
-    mask:url("stellantis.svg") no-repeat center/contain;
-    filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));
-    animation:brilho 3.5s ease-in-out infinite;
-  }
-  @keyframes brilho{
-    0%{background-position:120% 0;}
-    100%{background-position:-20% 0;}
-  }
-  /* Campo de senha */
-  .form-senha{
-    margin-top:26px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-  .campo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:14px 16px;
-    border-radius:16px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-  }
-  .campo input{
-    flex:1;
-    border:none;
-    outline:none;
-    background:transparent;
-    color:#eef1f7;
-    font-size:15px;
-    letter-spacing:2px;
-  }
-  .campo input::placeholder{color:rgba(238,241,247,.45);letter-spacing:.5px;}
-  .btn-entrar{
-    padding:14px 16px;
-    border:none;
-    border-radius:16px;
-    background:linear-gradient(180deg,#1e5bff,#0b3ec9);
-    color:#fff;
-    font-size:15px;
-    font-weight:600;
-    letter-spacing:1px;
-    cursor:pointer;
-    box-shadow:0 8px 24px rgba(30,91,255,.35);
-    transition:transform .12s ease, box-shadow .12s ease;
-  }
-  .btn-entrar:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(30,91,255,.45);}
-  .btn-entrar:active{transform:translateY(0);}
-  .aviso{
-    min-height:16px;
-    font-size:12px;
-    letter-spacing:.3px;
-    opacity:.7;
-  }
-  .rodape{
-    margin-top:22px;
-    font-family:Georgia,"Times New Roman","Cambria",serif;
-    font-size:clamp(13px,4vw,17px);
-    font-weight:700;letter-spacing:6px;text-transform:uppercase;
-    opacity:.92;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1r ai — Tela de bloqueio (prévia)</title>
+  <style>
+    html, body { margin:0; padding:0; height:100%;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:#000; color:#eef1f7; }
+
+    /* ====== Tela de bloqueio: imagem em tela cheia + apenas o campo de senha ====== */
+    #login-overlay { position:fixed; inset:0; z-index:1000;
+      display:flex; align-items:center; justify-content:center;
+      padding:24px; overflow:hidden; background:#000; }
+    #login-overlay.hidden { display:none; }
+
+    /* Imagem de fundo em tela cheia */
+    #login-overlay .bg { position:absolute; inset:0;
+      background-image:url("bloqueio.jpg");
+      background-size:cover; background-position:center; z-index:0; }
+
+    /* Escurecimento sutil so para dar legibilidade ao campo (sem cartao, sem textos) */
+    #login-overlay .veu { position:absolute; inset:0; z-index:1;
+      background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%); }
+
+    /* Campo de senha flutuante */
+    #login-overlay .form-senha { position:relative; z-index:2;
+      width:min(88vw,420px); margin-top:auto; margin-bottom:8vh;
+      display:flex; flex-direction:column; gap:12px; }
+    #login-overlay .campo { display:flex; align-items:center; gap:10px;
+      padding:15px 18px; border-radius:18px;
+      background:rgba(10,12,18,.45); border:1px solid rgba(255,255,255,.18);
+      backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%);
+      box-shadow:0 12px 40px rgba(0,0,0,.45); }
+    #login-overlay .campo input { flex:1; border:none; outline:none;
+      background:transparent; color:#fff; font-size:15px; letter-spacing:2px; text-align:center; }
+    #login-overlay .campo input::placeholder { color:rgba(255,255,255,.6); letter-spacing:.5px; }
+    #login-overlay .btn-entrar { padding:14px 16px; border:none; border-radius:16px;
+      background:linear-gradient(180deg,#1e5bff,#0b3ec9); color:#fff;
+      font-size:15px; font-weight:600; letter-spacing:1px; cursor:pointer;
+      box-shadow:0 8px 24px rgba(30,91,255,.35);
+      transition:transform .12s ease, box-shadow .12s ease; }
+    #login-overlay .btn-entrar:hover { transform:translateY(-1px); box-shadow:0 10px 28px rgba(30,91,255,.45); }
+    #login-overlay .btn-entrar:active { transform:translateY(0); }
+    #login-overlay .btn-entrar:disabled { opacity:0.6; cursor:default; }
+    #login-overlay .aviso { min-height:16px; text-align:center;
+      font-size:12px; letter-spacing:.3px; opacity:.95; color:#ffb3b3;
+      text-shadow:0 1px 3px rgba(0,0,0,.6); }
+  </style>
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="veu"></div>
-  <div class="brilho-base"></div>
+  <div id="login-overlay">
+    <div class="bg"></div>
+    <div class="veu"></div>
 
-  <main class="cartao">
-    <span class="marca-luz" role="img" aria-label="STELLANTIS"></span>
-
-    <form class="form-senha" onsubmit="return false;">
+    <form id="login-form" class="form-senha">
       <div class="campo">
-        <input id="senha" type="password" placeholder="Digite a senha de acesso" autocomplete="off" />
+        <input type="password" id="senha" placeholder="Digite a senha de acesso" autocomplete="current-password" />
       </div>
-      <button class="btn-entrar" type="button" onclick="entrar()">Entrar</button>
-      <div class="aviso" id="aviso"></div>
+      <button type="submit" id="entrar" class="btn-entrar">Entrar</button>
+      <div class="aviso" id="login-erro"></div>
     </form>
-
-    <div class="rodape">𝐒𝐄𝐆𝐔𝐑𝐀𝐍𝐂̧𝐀 𝐏𝐀𝐓𝐑𝐈𝐌𝐎𝐍𝐈𝐀𝐋</div>
-  </main>
+  </div>
 
   <script>
-    // Prévia apenas: não valida senha real nem conecta ao chat.
-    function entrar(){
-      var v = document.getElementById('senha').value.trim();
-      var aviso = document.getElementById('aviso');
-      if(!v){
-        aviso.textContent = 'Digite a senha para continuar.';
-      } else {
-        aviso.textContent = 'Prévia — sem conexão real. Aparência do acesso.';
+    const WEBHOOK = 'https://emacaron.app.n8n.cloud/webhook/add5ef72-1f64-4570-8834-34743a122b82/chat';
+    const USUARIO = 'STELLANTIS';
+    const overlay = document.getElementById('login-overlay');
+    const form = document.getElementById('login-form');
+    const inputSenha = document.getElementById('senha');
+    const btn = document.getElementById('entrar');
+    const erro = document.getElementById('login-erro');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const senha = inputSenha.value;
+      if (!senha) { erro.textContent = 'Digite a senha.'; return; }
+      const authHeader = 'Basic ' + btoa(USUARIO + ':' + senha);
+      btn.disabled = true; erro.textContent = 'Verificando...';
+      try {
+        const resp = await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { Authorization: authHeader, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'loadPreviousSession', sessionId: 'verificacao-de-acesso' })
+        });
+        if (resp.status === 401 || resp.status === 403) {
+          erro.textContent = 'Senha incorreta.'; btn.disabled = false; return;
+        }
+        erro.textContent = 'Senha correta! (previa — o chat abriria aqui)';
+        btn.disabled = false;
+      } catch (err) {
+        erro.textContent = 'Erro de conexao. Tente novamente.'; btn.disabled = false;
       }
-    }
-    document.getElementById('senha').addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){ entrar(); }
     });
   </script>
 </body>
