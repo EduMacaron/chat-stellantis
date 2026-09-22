@@ -11,22 +11,22 @@
 
     /* ====== Tela de bloqueio: imagem em tela cheia + apenas o campo de senha ====== */
     #login-overlay { position:fixed; inset:0; z-index:1000;
-      display:flex; align-items:center; justify-content:center;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
       padding:24px; overflow:hidden; background:#000; }
     #login-overlay.hidden { display:none; }
 
     /* Imagem de fundo em tela cheia */
     #login-overlay .bg { position:absolute; inset:0;
       background-image:url("bd91f442-3e65-431b-afd8-8a5c54731c81.jpg");
-      background-size:cover; background-position:center; z-index:0; }
+      background-size:cover; background-position:center; filter:blur(24px) brightness(.5); transform:scale(1.12); z-index:0; }
 
     /* Escurecimento sutil so para dar legibilidade ao campo (sem cartao, sem textos) */
-    #login-overlay .veu { position:absolute; inset:0; z-index:1;
-      background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%); }
+    #login-overlay .veu { position:absolute; top:0; left:0; right:0; bottom:24vh; z-index:1;
+      background-image:url("bd91f442-3e65-431b-afd8-8a5c54731c81.jpg"); background-size:contain; background-position:center; background-repeat:no-repeat; }
 
     /* Campo de senha flutuante */
     #login-overlay .form-senha { position:relative; z-index:2;
-      width:min(88vw,420px); margin-top:6vh; margin-bottom:auto;
+      width:min(88vw,420px); margin-top:auto; margin-bottom:2vh;
       display:flex; flex-direction:column; gap:12px; }
     #login-overlay .campo { display:flex; align-items:center; gap:10px;
       padding:15px 18px; border-radius:18px;
